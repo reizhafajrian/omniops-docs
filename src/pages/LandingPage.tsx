@@ -36,7 +36,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
       {/* Top Announcement Banner */}
       <div className="bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600 text-white text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 shadow-md">
         <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-mono uppercase tracking-wider">v1.0 Release</span>
-        <span>DockOps GitOps Engine for Docker Compose is Live!</span>
+        <span>OmniOps GitOps Engine for Docker Compose is Live!</span>
         <button onClick={onGoToDocs} className="underline hover:text-slate-200 ml-1">Read Docs &rarr;</button>
       </div>
 
@@ -49,7 +49,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
             </div>
             <div>
               <h1 className="text-lg font-bold tracking-tight text-white font-sans">
-                DockOps
+                OmniOps
               </h1>
               <p className="text-[11px] text-slate-400 font-mono">
                 GitOps Engine for Docker
@@ -96,7 +96,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
           </h1>
 
           <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto mb-10 font-sans leading-relaxed">
-            DockOps automatically reconciles your Docker Compose configurations with Git.
+            OmniOps automatically reconciles your Docker Compose configurations with Git.
             Includes live CPU/RAM telemetry, private registry auth, custom <code>.env</code> management, and real-time Webhook triggers.
           </p>
 
@@ -376,7 +376,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
         <div className="glass-panel border border-slate-800 rounded-3xl p-8 bg-dark-900/80 shadow-2xl">
           <div className="text-center mb-10">
             <span className="text-xs font-mono text-brand-400 font-bold uppercase tracking-wider block mb-2">High-Performance Hexagonal Architecture</span>
-            <h2 className="text-2xl font-black text-slate-100 font-sans">How DockOps Works</h2>
+            <h2 className="text-2xl font-black text-slate-100 font-sans">How OmniOps Works</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center font-mono text-xs">
@@ -412,7 +412,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Layers size={18} className="text-brand-400" />
-            <span className="font-bold text-slate-300">DockOps GitOps Engine</span>
+            <span className="font-bold text-slate-300">OmniOps GitOps Engine</span>
             <span>&copy; {new Date().getFullYear()} All rights reserved.</span>
           </div>
 
