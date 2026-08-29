@@ -361,14 +361,17 @@ omni install --engine both`}
                 <h2 className="text-lg font-bold text-slate-200 mb-3">Step 3: Start OmniOps</h2>
                 <CodeBlock
                   id="start-first"
-                  code={`# Start the server in the background (recommended for servers/SSH)
+                  code={`# 1. Create your admin user first
+omni users create admin <your-password>
+
+# 2. Start the server in the background (recommended for servers/SSH)
 omni start
 
 # Or in foreground mode for debugging
 omni serve
 
-# Open the web UI
-open http://localhost:9090`}
+# 3. Open the web UI and login
+open http://localhost:8080`}
                 />
               </div>
 
@@ -406,19 +409,20 @@ omni uninstall --deep-clean --engine docker`}
                 </p>
               </div>
 
-              <CodeBlock id="cli-help" code={`$ omni --help
+              <CodeBlock id="cli-help" code={`$ omni
 
 Self-Hosted GitOps Engine for Podman & Docker
 
-Usage: omni [COMMAND]
+Usage: omni <COMMAND>
 
 Commands:
-  serve      Starts the OmniOps backend server (foreground)
+  serve      Starts the OmniOps backend server (default)
   install    Installs a container engine (podman or docker)
-  uninstall  Uninstalls OmniOps and optionally the container engine
+  uninstall  Uninstalls and deep cleans a container engine
   start      Starts the OmniOps server in the background (daemon mode)
   stop       Stops the background OmniOps server
   status     Shows the status of the background OmniOps server
+  users      Manage users
   help       Print this message or the help of the given subcommand(s)
 
 Options:
@@ -879,13 +883,10 @@ https://oauth2:{YOUR_TOKEN}@github.com/you/private-repo.git`}
               </div>
 
               <CodeBlock id="env-file" language=".env" code={`# Server
-PORT=9090
+PORT=8080
 HOST=0.0.0.0
 
-# Authentication
-GITOPS_TOKEN=your-secret-api-token-here
-
-# Database
+# Database (Users and sessions are stored here)
 DATABASE_URL=sqlite:./omniops.db
 
 # Stacks config file (optional)
@@ -896,9 +897,8 @@ RUST_LOG=info      # options: error, warn, info, debug, trace`} />
 
               <div className="space-y-3">
                 {[
-                  { var: 'PORT', default: '9090', desc: 'The TCP port the HTTP server listens on.' },
+                  { var: 'PORT', default: '8080', desc: 'The TCP port the HTTP server listens on.' },
                   { var: 'HOST', default: '0.0.0.0', desc: 'The network interface to bind to. Use 127.0.0.1 to restrict access to localhost only.' },
-                  { var: 'GITOPS_TOKEN', default: '(required)', desc: 'The secret bearer token required for all API requests and web UI login. Keep this secret.' },
                   { var: 'DATABASE_URL', default: 'sqlite:./omniops.db', desc: 'SQLite database file path. All stack configurations, sync history, and registry credentials are stored here.' },
                   { var: 'RUST_LOG', default: 'info', desc: 'Log verbosity level. Set to debug to see detailed request and reconciliation logs.' },
                 ].map(e => (
@@ -921,10 +921,10 @@ RUST_LOG=info      # options: error, warn, info, debug, trace`} />
                 <span className="text-xs font-mono text-brand-400 font-bold">Developer</span>
                 <h1 className="text-3xl font-bold text-slate-100 tracking-tight mt-1">REST & WebSocket API</h1>
                 <p className="text-sm text-slate-400 mt-3 leading-relaxed">
-                  All API endpoints are served at <code className="bg-dark-900 px-1.5 py-0.5 rounded text-brand-300 font-mono">http://localhost:9090/api</code>.
-                  Every request must include the authentication header:
+                  All API endpoints are served at <code className="bg-dark-900 px-1.5 py-0.5 rounded text-brand-300 font-mono">http://localhost:8080/api</code>.
+                  Every request must include the session cookie or session bearer token obtained from <code className="bg-dark-900 px-1.5 py-0.5 rounded text-brand-300 font-mono">POST /api/auth/login</code>.
                 </p>
-                <CodeBlock id="api-auth" code={`Authorization: Bearer YOUR_GITOPS_TOKEN`} />
+                <CodeBlock id="api-auth" code={`Authorization: Bearer YOUR_SESSION_TOKEN`} />
               </div>
 
               <div>
@@ -1010,9 +1010,9 @@ systemctl --user status podman.socket`,
 tail -f ~/.omniops.log | grep -i "error"`,
                   },
                   {
-                    q: 'Web UI shows 401 Unauthorized',
-                    a: 'The GITOPS_TOKEN in your .env file does not match what you are entering in the login screen. Check your .env file:',
-                    code: `cat .env | grep GITOPS_TOKEN`,
+                    q: 'Web UI shows 401 Unauthorized or Invalid Credentials',
+                    a: 'Make sure you have created a user account via the CLI. OmniOps uses a SQLite database for users, not environment variables:',
+                    code: `omni users create admin <your-password>`,
                   },
                 ].map(item => (
                   <div key={item.q} className="space-y-2">
