@@ -12,7 +12,11 @@ import {
   Activity,
   Sliders,
   Lock,
-  GitBranch
+  GitBranch,
+  RefreshCw,
+  BarChart2,
+  Clock,
+  Network
 } from 'lucide-react';
 
 interface LandingPageProps {
@@ -23,7 +27,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
   const [copiedCmd, setCopiedCmd] = useState(false);
   const [activeTab, setActiveTab] = useState<'gitops' | 'telemetry' | 'webhooks' | 'limits' | 'topology'>('gitops');
 
-  const quickstartCmd = 'docker run -d -p 9090:9090 -v /var/run/docker.sock:/var/run/docker.sock argocompose/engine:latest';
+  const quickstartCmd = 'curl -sSL https://raw.githubusercontent.com/reizhafajrian/omniops/main/scripts/install.sh | bash';
 
   const handleCopyCmd = () => {
     navigator.clipboard.writeText(quickstartCmd);
@@ -36,7 +40,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
       {/* Top Announcement Banner */}
       <div className="bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600 text-white text-xs font-semibold py-2 px-4 text-center flex items-center justify-center gap-2 shadow-md">
         <span className="px-2 py-0.5 rounded-full bg-white/20 text-[10px] font-mono uppercase tracking-wider">v1.0 Release</span>
-        <span>OmniOps GitOps Engine for Docker Compose is Live!</span>
+        <span>OmniOps GitOps Engine for Podman & Docker is Live!</span>
         <button onClick={onGoToDocs} className="underline hover:text-slate-200 ml-1">Read Docs &rarr;</button>
       </div>
 
@@ -52,7 +56,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
                 OmniOps
               </h1>
               <p className="text-[11px] text-slate-400 font-mono">
-                GitOps Engine for Docker
+                GitOps Engine for Podman & Docker
               </p>
             </div>
           </div>
@@ -85,18 +89,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-mono mb-6 shadow-inner">
             <Zap size={14} className="text-brand-400 animate-pulse" />
-            <span>Declarative Docker Compose GitOps Control Plane</span>
+            <span>Declarative Podman & Docker GitOps Control Plane</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6 leading-[1.15] font-sans">
             Continuous Deployment for <br />
             <span className="bg-gradient-to-r from-brand-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
-              Docker Compose Stacks
+              Podman & Docker Compose Stacks
             </span>
           </h1>
 
           <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto mb-10 font-sans leading-relaxed">
-            OmniOps automatically reconciles your Docker Compose configurations with Git.
+            OmniOps automatically reconciles your Podman & Docker Compose configurations with Git.
             Includes live CPU/RAM telemetry, private registry auth, custom <code>.env</code> management, and real-time Webhook triggers.
           </p>
 
@@ -139,53 +143,53 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setActiveTab('gitops')}
-                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all ${
+                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 ${
                   activeTab === 'gitops'
                     ? 'bg-brand-500/20 border-brand-500 text-brand-300'
                     : 'bg-dark-950 border-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
               >
-                🔄 Git Sync
+                <RefreshCw size={14} /> Git Sync
               </button>
               <button
                 onClick={() => setActiveTab('telemetry')}
-                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all ${
+                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 ${
                   activeTab === 'telemetry'
                     ? 'bg-indigo-500/20 border-indigo-500 text-indigo-300'
                     : 'bg-dark-950 border-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
               >
-                📊 CPU/RAM Stats
+                <BarChart2 size={14} /> CPU/RAM Stats
               </button>
               <button
                 onClick={() => setActiveTab('webhooks')}
-                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all ${
+                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 ${
                   activeTab === 'webhooks'
                     ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
                     : 'bg-dark-950 border-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
               >
-                ⚡ Webhooks
+                <Webhook size={14} /> Webhooks
               </button>
               <button
                 onClick={() => setActiveTab('limits')}
-                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all ${
+                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 ${
                   activeTab === 'limits'
                     ? 'bg-purple-500/20 border-purple-500 text-purple-300'
                     : 'bg-dark-950 border-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
               >
-                🎛️ Runtime Limits
+                <Sliders size={14} /> Runtime Limits
               </button>
               <button
                 onClick={() => setActiveTab('topology')}
-                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all ${
+                className={`px-3.5 py-2 text-xs font-semibold rounded-xl border transition-all flex items-center gap-1.5 ${
                   activeTab === 'topology'
                     ? 'bg-orange-500/20 border-orange-500 text-orange-300'
                     : 'bg-dark-950 border-slate-800 text-slate-400 hover:text-slate-200'
                 }`}
               >
-                🕸️ Topology DAG
+                <Network size={14} /> Topology DAG
               </button>
             </div>
           </div>
@@ -199,7 +203,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
                     <span className="font-bold text-slate-100 text-sm">Stack: production-web-api</span>
                     <span className="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">Synced</span>
                   </div>
-                  <span className="text-slate-500">⏱️ Next Poll: 42s</span>
+                  <span className="text-slate-500 flex items-center gap-1.5"><Clock size={12} /> Next Poll: 42s</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-slate-300">
                   <div className="p-3 rounded-xl bg-dark-900 border border-slate-800">
@@ -277,7 +281,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
                   </div>
                 </div>
                 <p className="text-slate-400 text-[11px]">
-                  Executes <code>docker update</code> live on running containers without restarting processes or dropping client connections.
+                  Executes <code>podman update</code> live on running containers without restarting processes or dropping client connections.
                 </p>
               </div>
             )}
@@ -291,7 +295,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
                   <div className="p-2 border border-slate-700 rounded-lg bg-dark-950">PostgreSQL DB</div>
                 </div>
                 <p className="text-slate-400 text-[11px]">
-                  Automatically parses Docker <code>com.docker.compose.depends_on</code> labels to visualize the Directed Acyclic Graph (DAG) of your services architecture.
+                  Automatically parses <code>depends_on</code> in your compose file to visualize the Directed Acyclic Graph (DAG) of your services architecture.
                 </p>
               </div>
             )}
@@ -400,8 +404,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGoToDocs }) => {
 
             <div className="p-4 rounded-2xl bg-dark-950 border border-slate-800 space-y-2">
               <Server size={24} className="mx-auto text-emerald-400" />
-              <h4 className="font-bold text-slate-200">4. Docker Daemon</h4>
-              <p className="text-[11px] text-slate-500 font-sans">Applies zero-downtime <code>docker compose up -d</code></p>
+              <h4 className="font-bold text-slate-200">4. Podman / Docker Daemon</h4>
+              <p className="text-[11px] text-slate-500 font-sans">Applies zero-downtime <code>compose up -d</code></p>
             </div>
           </div>
         </div>

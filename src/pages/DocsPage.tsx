@@ -51,7 +51,8 @@ type Section =
   | 'resource-limits'
   | 'api-ref'
   | 'env-config'
-  | 'troubleshooting';
+  | 'troubleshooting'
+  | 'license';
 
 interface NavItem {
   id: Section;
@@ -91,6 +92,7 @@ const navGroups: NavGroup[] = [
       { id: 'env-config', label: 'Environment Config', icon: <Settings size={14} /> },
       { id: 'api-ref', label: 'REST & WebSocket API', icon: <Code2 size={14} /> },
       { id: 'troubleshooting', label: 'Troubleshooting', icon: <HelpCircle size={14} /> },
+      { id: 'license', label: 'License', icon: <FileText size={14} /> },
     ]
   }
 ];
@@ -1041,6 +1043,40 @@ tail -f ~/.omniops.log | grep -i "error"`,
                     {item.code && <div className="pl-5"><CodeBlock id={`trouble-${item.q}`} code={item.code} /></div>}
                   </div>
                 ))}
+              </div>
+            </section>
+          )}
+
+          {/* ── LICENSE ── */}
+          {activeSection === 'license' && (
+            <section className="space-y-8">
+              <div>
+                <span className="text-xs font-mono text-brand-400 font-bold">Legal</span>
+                <h1 className="text-3xl font-bold text-slate-100 tracking-tight mt-1">License</h1>
+              </div>
+
+              <div className="space-y-4 text-sm text-slate-400 leading-relaxed">
+                <h2 className="text-lg font-bold text-slate-200">Non-Commercial & Internal Business Use License</h2>
+                <p>Copyright (c) 2024 Reizha Fajrian</p>
+                <p>
+                  This software is provided for personal, educational, and internal business use. You and your company may use this software internally to deploy and manage your own applications.
+                </p>
+                <h3 className="text-base font-bold text-slate-200 mt-6">Restrictions</h3>
+                <p>However, you may not use this software to:</p>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Sell the software or offer it as part of a commercial product.</li>
+                  <li>Offer the software as a paid SaaS (Software-as-a-Service), managed service, or subscription to third parties.</li>
+                  <li>Resell or distribute the software for direct profit.</li>
+                </ul>
+                <div className="p-4 rounded-xl border border-slate-800 bg-dark-900 mt-6 text-xs text-slate-500 font-mono">
+                  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                  SOFTWARE.
+                </div>
               </div>
             </section>
           )}
