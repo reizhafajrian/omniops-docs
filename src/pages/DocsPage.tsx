@@ -306,17 +306,7 @@ export const DocsPage: React.FC<DocsPageProps> = ({ onGoToLanding }) => {
               </div>
 
               <div>
-                <h2 className="text-lg font-bold text-slate-200 mb-1">Option 2: Homebrew (macOS)</h2>
-                <p className="text-xs text-slate-500 mb-3">If you use Homebrew, you can install OmniOps via the official tap:</p>
-                <CodeBlock
-                  id="install-brew"
-                  code={`brew tap reizhafajrian/omniops https://github.com/reizhafajrian/omniops
-brew install omni`}
-                />
-              </div>
-
-              <div>
-                <h2 className="text-lg font-bold text-slate-200 mb-1">Option 3: Manual Download</h2>
+                <h2 className="text-lg font-bold text-slate-200 mb-1">Option 2: Manual Download</h2>
                 <p className="text-xs text-slate-500 mb-3">Download the binary directly from GitHub Releases for your platform:</p>
                 <div className="p-4 rounded-2xl bg-dark-900 border border-slate-800 space-y-2 text-xs font-mono">
                   {[
